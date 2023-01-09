@@ -1,31 +1,89 @@
-# Artefact's Boilerplate for  DataScience Python projects 
+## Overview
 
-This repository is a boilerplate repository designed to be used when starting a new project to help kickstart things easily.
+### Objective
 
-To create a new repository based on this one please use the "create from a template" feature (see [Github's documentation](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template)).
+Teach practical aspects of productionizing ML services — from collecting requirements to model deployment and monitoring.
 
-There will be more than you need for your project so feel free to drop what you don't need after you initialized your repo with this one.
+### Target audience
 
-## Organisation of the repo
+Data scientists and ML engineers. Also software engineers and data engineers interested in learning about putting ML in production.
 
-### Folders
+### Pre-requisites
 
-    The folder name should be self sufficient, however some extra details:
-    - bin: This is the folder where you store your executable, that could be main python scripts, or bash ones.
-    - lib: this is where you store the main libraries used within your project. 
-    - data: Separated in 3 folder to start: Raw data, intermediate, and processed.
-    - doc: Sphinx template to generate code documentation
-    - references: all the written documentation (functional, features) that is not sphinx generated 
+* Python
+* Docker
+* Being comfortable with command line 
+* Prior exposure to machine learning
+* Prior programming experience (at least 1+ year)
 
-### Requirements
+### Timeline
 
-You should always have requirements to your project to ensure reproductibility.
+Course start: ?
 
-Requirements are often a pain, between the one that you really use, and all the dependencies.
-This repo advise you to use [Pip-tools](https://github.com/jazzband/pip-tools).
 
-To do so, put your requirements in the requirements.in, then run 
+## Syllabus
 
- ` pip-compile requirements.in`
+### [Module 1: Introduction](01-intro)
 
- This will generate automatically the requirements.txt with all the required dependencies.
+* What is MLOps
+* MLOps maturity model
+* Why do we need MLOps
+* Running example: NY Taxi trips dataset
+* Course overview
+* Environment preparation
+* Practice
+* Homework
+
+
+### [Module 2: Pipeline and Orchestration](02-pipeline-and-orchestration)
+
+* Introduction to workflows orchestration
+* Introduction to Prefect
+* From notebooks to workflows
+* Continuous Training
+* Next steps and resources
+* Practice
+* Homework
+
+
+### [Module 3: Data Management](03-data-management)
+
+* Testing Data Quality
+* Creating Data Pipelines
+* Feature Stores
+* Data Leakage
+* Training / Serving Skew
+* Practice
+* Homework
+
+
+### [Module 4: Model and Experiment Management](04-model-and-experiment-management)
+
+* Experiment tracking intro
+* What is MLflow
+* Experiment tracking with MLflow
+* Saving and loading models with MLflow
+* Model registry
+* Practice
+* Homework
+
+
+### [Module 5: Model Deployment](05-model-deployment)
+
+* Three ways of model deployment: Online (web and streaming) and offline (batch)
+* Web service: model deployment with Flask
+* Streaming: consuming events with AWS Kinesis and Lambda
+* Batch: scoring data offline
+
+
+### [Module 6: Practice](06-practices)
+
+* End-to-end project with all the things above
+
+
+## Instructors
+
+- El Hamri Amale
+- Guidi Ariel
+- Quinquet Guillaume
+- Si Larbi Karim
