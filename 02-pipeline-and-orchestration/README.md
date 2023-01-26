@@ -18,9 +18,9 @@ The machine learning phase is mainly constituted by the following steps :
 
 The data for this module can be downloaded on the [TLC Trip Record Data page](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
 To complete this module, you can start downloading 03 samples of data from this site :
-- `sample 1 example` : yellow trip 2021-01 data
-- `sample 2 example` : yellow trip 2021-02 data
-- `sample 3 example` : yellow trip 2021-03 data
+- `sample 1 example` : yellow trip 2021-01 data (to train model)
+- `sample 2 example` : yellow trip 2021-02 data (to evaluate model)
+- `sample 3 example` : yellow trip 2021-03 data (for inference)
 
 A notebook implementing the machine learning steps to predict Taxi trip duration can be found in the 
 course GitHub repository in the [introduction course](https://github.com/artefactory/supinfo_mlops_course/tree/master/01-intro).
@@ -41,13 +41,17 @@ Create the following functions using the notebook code and applying good code pr
 
 **Exercise 2** : Convert notebook into python files (2/3) 
 
-These steps constitute the data processing phase.
+These steps constitute the data processing phase. \
 Create two `processing` functions as entrypoint for all these steps
+
 - The first use all steps to `process_train_data`
 - The second don't compute target or filter outliers and will be used to `process_inference_data` to predict in "production".
 
+The extract return `x`, `y` and `dv`. \
+The `dv` from `process_train_data` should be used as argument in `process_inference_data` to transform the test data
 
-**Exercise 3**: Convert notebook into python files (1/3)
+
+**Exercise 3**: Convert notebook into python files (3/3)
 
 Create five functions to complete the ML process : 
 - train model
@@ -97,7 +101,7 @@ If you want to reset the database, run `prefect orion database reset`
 Import flow and task object from prefect.
 - Use the decorators `@task` and `@flow` to create your first prefect flows :
   - processing train data
-  - processing inference data (this function should take the `processing_train_data` as argument)
+  - processing inference data
 - Test your code by calling the flows run with downloaded data
 - Visualize in the local prefect UI
 
