@@ -31,6 +31,11 @@ def test_failure():
     failure()
 
 
+###################################################
+# Workflows orchestration with prefect : EXERCISE 3
+###################################################
+
+
 @task(name='load_data', tags=['preprocessing'], retries=2, retry_delay_seconds=60)
 def load_data(path: str):
     return pd.read_parquet(path)
@@ -91,6 +96,27 @@ def extract_x_y(
     return {'x': x, 'y': y, 'dv': dv}
 
 
+@flow(name="Train processing", retries=1, retry_delay_seconds=30)
+def process_train_data(path,  dv=None):
+    df = load_data(path)
+    df1 = compute_target(df)
+    df2 = filter_outliers(df1)
+    df3 = encode_categorical_cols(df2)
+    return extract_x_y(df3, dv=dv)
+
+
+@flow(name="Inference Processing", retries=1, retry_delay_seconds=30)
+def process_inference_data(path, dv):
+    df = load_data(path)
+    df1 = encode_categorical_cols(df)
+    return extract_x_y(df1, dv=dv, with_target=False)
+
+
+###################################################
+# Workflows orchestration with prefect : EXERCISE 4
+###################################################
+
+
 @task(name="Train model", tags=['Model'])
 def train_model(
         x_train: csr_matrix,
@@ -138,21 +164,6 @@ def save_pickle(path: str, obj: dict):
 # just set of tasks, it should be all good if we don't
 # want to add a layer of complexity
 #########################################################
-
-@flow(name="Train processing", retries=1, retry_delay_seconds=30)
-def process_train_data(path,  dv=None):
-    df = load_data(path)
-    df1 = compute_target(df)
-    df2 = filter_outliers(df1)
-    df3 = encode_categorical_cols(df2)
-    return extract_x_y(df3, dv=dv)
-
-
-@flow(name="Inference Processing", retries=1, retry_delay_seconds=30)
-def process_inference_data(path, dv):
-    df = load_data(path)
-    df1 = encode_categorical_cols(df)
-    return extract_x_y(df1, dv=dv, with_target=False)
 
 
 @flow(name="Model initialisation")

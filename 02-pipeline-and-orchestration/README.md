@@ -1,5 +1,8 @@
 ## Machine learning pipelines and Orchestration
 
+> **Version**
+> This module has been created using Prefect 2.7.9
+
 ### Intro and Use case Reminder
 
 The project is *New York City Taxi trip duration prediction*. \
@@ -14,25 +17,26 @@ The machine learning phase is mainly constituted by the following steps :
 - data processing
 - model training
 - model evaluation
-- inference (prediction)
+- prediction
 
-The data for this module can be downloaded on the [TLC Trip Record Data page](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
-To complete this module, you can start downloading 03 samples of data from this site :
+The data to use for this module can be downloaded from the [TLC Trip Record Data page](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
+To complete this module, you will need 03 samples of data :
 - `sample 1 example` : yellow trip 2021-01 data (to train model)
 - `sample 2 example` : yellow trip 2021-02 data (to evaluate model)
-- `sample 3 example` : yellow trip 2021-03 data (for inference)
+- `sample 3 example` : yellow trip 2021-03 data (for prediction)
 
 A notebook implementing the machine learning steps to predict Taxi trip duration can be found in the 
-course GitHub repository in the [introduction course](https://github.com/artefactory/supinfo_mlops_course/tree/master/01-intro).
+course' GitHub repository in the [introduction course](https://github.com/artefactory/supinfo_mlops_course/tree/master/01-intro).
 
-### From notebook to Workflows
+### From notebook to Workflows :
+#### *e.g. solution : orchestration_00_machine_learning.py*
 
 First step before using prefect for orchestration is to transform our notebook into python files 
-following know good practices.
+following known good practices.
 
 **Exercise 1** : Convert notebook into python files (1/3)
 
-Create the following functions using the notebook code and applying good code practices viewed :
+Create/move the following functions in/to a file using the notebook's code and applying good code practices viewed :
 - load_data
 - compute_target
 - filter_outliers
@@ -45,10 +49,10 @@ These steps constitute the data processing phase. \
 Create two `processing` functions as entrypoint for all these steps
 
 - The first use all steps to `process_train_data`
-- The second don't compute target or filter outliers and will be used to `process_inference_data` to predict in "production".
+- The second don't compute target or filter outliers and will be used to `process_prediction_data` to predict in "production".
 
 The extract return `x`, `y` and `dv`. \
-The `dv` from `process_train_data` should be used as argument in `process_inference_data` to transform the test data
+The `dv` from `process_train_data` should be used as argument in `process_prediction_data` to transform the test data
 
 
 **Exercise 3**: Convert notebook into python files (3/3)
@@ -61,12 +65,23 @@ Create five functions to complete the ML process :
   - process train data
   - train model
   - evaluate model
-- An entrypoint function for inference:
-  - process inference data
+- An entrypoint function for prediction:
+  - process prediction data
   - predict
 - Test your code with the downloaded data
 
-### Workflows orchestration with prefect
+Hint : Add a save step using helpers, at the end of the ml pipeline to serialize your model and dict vectorizer.
+These two element will be loaded for batch prediction.
+
+
+### Workflows orchestration with prefect : 
+
+#### e.g. solutions : 
+- *exercise 1 : orchestration_01_prefect_orion.sh*
+- *exercise 2 : orchestration_02_first_flow.py*
+- *exercise 3 : orchestration_03_machine_learning_workflow.py*
+- *exercise 4 : orchestration_03_machine_learning_workflow.py*
+- *exercise 5 : orchestration_04_prefect_deployment_objects.py*
 
 Helpers : 
 ```
@@ -101,9 +116,19 @@ If you want to reset the database, run `prefect orion database reset`
 Import flow and task object from prefect.
 - Use the decorators `@task` and `@flow` to create your first prefect flows :
   - processing train data
-  - processing inference data
+  - processing prediction data
 - Test your code by calling the flows run with downloaded data
 - Visualize in the local prefect UI
+
+> :warning: **Typing tasks and flows in prefect** : \
+Typing tasks in prefect is done as with any python code. \
+For flows, either use `validate_parameters=False`
+or define pydantic models for prefect to understand
+your NON DEFAULT typing (see extra section). \
+
+> But if all tasks are typed, since flows are just set of tasks, it should be all good if we don't want to add a layer of complexity \
+> `Default types` : str, int ...
+
 
 **Exercise 3**: Customize your flows
 
@@ -135,9 +160,9 @@ Create the complete ML process flow :
 - save model and vectorizer (dv) | use helpers
 - predict 
 
-Create the inference flow:
+Create the prediction flow:
 - load model and vectorizer
-- process inference data
+- process prediction data
 - predict
 
 - Test your code
@@ -175,7 +200,7 @@ some performance analysis. We also receive data to predict each hour.
 
 Use prefect deployment object in order to : 
 - Schedule complete ml process to run weekly
-- Schedule inference pipeline to run each hour
+- Schedule prediction pipeline to run each hour
 
 ### More concepts with orchestration & prefect
 

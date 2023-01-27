@@ -11,6 +11,11 @@ from scipy.sparse import csr_matrix
 from prefect import task, flow
 
 
+###################################################
+# Workflows orchestration with prefect : EXERCISE 2
+###################################################
+
+
 @task()
 def load_data(path: str):
     return pd.read_parquet(path)
@@ -71,6 +76,24 @@ def extract_x_y(
     return {'x': x, 'y': y, 'dv': dv}
 
 
+@flow()
+def process_train_data(path,  dv=None):
+    df = load_data(path)
+    df1 = compute_target(df)
+    df2 = filter_outliers(df1)
+    df3 = encode_categorical_cols(df2)
+    return extract_x_y(df3, dv=dv)
+
+
+@flow()
+def process_inference_data(path, dv):
+    df = load_data(path)
+    df1 = encode_categorical_cols(df)
+    return extract_x_y(df1, dv=dv, with_target=False)
+
+#######################################################
+
+
 def train_model(
         x_train: csr_matrix,
         y_train: np.ndarray
@@ -103,21 +126,6 @@ def load_pickle(path: str):
 def save_pickle(path: str, obj: dict):
     with open(path, 'wb') as f:
         pickle.dump(obj, f)
-
-
-@flow()
-def process_train_data(path,  dv=None):
-    df = load_data(path)
-    df1 = compute_target(df)
-    df2 = filter_outliers(df1)
-    df3 = encode_categorical_cols(df2)
-    return extract_x_y(df3, dv=dv)
-
-
-def process_inference_data(path, dv):
-    df = load_data(path)
-    df1 = encode_categorical_cols(df)
-    return extract_x_y(df1, dv=dv, with_target=False)
 
 
 def train_and_predict(

@@ -8,6 +8,11 @@ from prefect.orion.schemas.schedules import (
 )
 
 
+###################################################
+# Workflows orchestration with prefect : EXERCISE 4
+###################################################
+
+
 modeling_deployment_every_sunday = Deployment.build_from_flow(
     name="Model training Deployment",
     flow=complete_ml,
