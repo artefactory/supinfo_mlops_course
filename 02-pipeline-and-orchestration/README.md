@@ -1,9 +1,9 @@
-## Machine learning pipelines and Orchestration
+# Machine learning pipelines and Orchestration
 
-> **Version**
+> **Version** : 
 > This module has been created using Prefect 2.7.9
 
-### Intro and Use case Reminder
+## Intro and Use case Reminder
 
 The project is *New York City Taxi trip duration prediction*. \
 The goal is to use the available data in order to train a simple machine learning model
@@ -28,7 +28,7 @@ To complete this module, you will need 03 samples of data :
 A notebook implementing the machine learning steps to predict Taxi trip duration can be found in the 
 course' GitHub repository in the [introduction course](https://github.com/artefactory/supinfo_mlops_course/tree/master/01-intro).
 
-### From notebook to Workflows :
+## From notebook to Workflows :
 #### *e.g. solution : orchestration_00_machine_learning.py*
 
 First step before using prefect for orchestration is to transform our notebook into python files 
@@ -74,7 +74,7 @@ Hint : Add a save step using helpers, at the end of the ml pipeline to serialize
 These two element will be loaded for batch prediction.
 
 
-### Workflows orchestration with prefect : 
+## Workflows orchestration with prefect : 
 
 #### e.g. solutions : 
 - *exercise 1 : orchestration_01_prefect_orion.sh*
@@ -202,7 +202,7 @@ Use prefect deployment object in order to :
 - Schedule complete ml process to run weekly
 - Schedule prediction pipeline to run each hour
 
-### More concepts with orchestration & prefect
+## More concepts with orchestration & prefect
 
 
 
