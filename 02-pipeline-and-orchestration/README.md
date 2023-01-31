@@ -115,6 +115,8 @@ If you want to reset the database, run :
 prefect orion database reset
 ```
 
+![](images/starting_page.png)
+
 **Exercise 2**: Create a data processing flow (2/5)
 
 It is simple to create workflows with prefect. It uses @flow and @task decorators that can be directly import to
@@ -157,7 +159,12 @@ def func():
 - Test your code
 - Visualize in the local prefect UI
 
- 
+If a task fails in the flow, it is possible to visualize which task fail and access the full log clicking on the tasks. \
+We can also access run information inside de `state` object that can be returned by the flows using python code
+
+ ![](images/radar_plot_fail.png)
+
+
 **Exercise 4** : Create machine learning flows (4/5)
 
 Create the complete ML process flow : 
@@ -209,6 +216,8 @@ some performance analysis. We also receive data to predict each hour.
 Use prefect deployment object in order to : 
 - Schedule complete ml process to run weekly
 - Schedule prediction pipeline to run each hour
+
+![](images/deployment.png)
 
 ## More concepts with orchestration & prefect
 
