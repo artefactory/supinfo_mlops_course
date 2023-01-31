@@ -159,7 +159,8 @@ def func():
 - Test your code
 - Visualize in the local prefect UI
 
-If a task fails in the flow, it is possible to visualize which task fail and access the full log clicking on the tasks. \
+If a task fails in the flow, it is possible to visualize which task fail and access the full log and traceback error
+by clicking on the tasks. \
 We can also access run information inside de `state` object that can be returned by the flows using python code
 
  ![](images/radar_plot_fail.png)
