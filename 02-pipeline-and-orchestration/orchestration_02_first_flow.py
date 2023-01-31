@@ -10,7 +10,6 @@ from scipy.sparse import csr_matrix
 
 from prefect import task, flow
 
-
 ###################################################
 # Workflows orchestration with prefect : EXERCISE 2
 ###################################################
@@ -77,19 +76,16 @@ def extract_x_y(
 
 
 @flow()
-def process_train_data(path,  dv=None):
+def process_data(path: str,  dv=None, with_target: bool = True):
     df = load_data(path)
-    df1 = compute_target(df)
-    df2 = filter_outliers(df1)
-    df3 = encode_categorical_cols(df2)
-    return extract_x_y(df3, dv=dv)
-
-
-@flow()
-def process_inference_data(path, dv):
-    df = load_data(path)
-    df1 = encode_categorical_cols(df)
-    return extract_x_y(df1, dv=dv, with_target=False)
+    if with_target:
+        df1 = compute_target(df)
+        df2 = filter_outliers(df1)
+        df3 = encode_categorical_cols(df2)
+        return extract_x_y(df3, dv=dv)
+    else:
+        df1 = encode_categorical_cols(df)
+        return extract_x_y(df1, dv=dv, with_target=with_target)
 
 #######################################################
 
@@ -150,8 +146,8 @@ def complete_ml(
     if not os.path.exists(local_storage):
         os.makedirs(local_storage)
 
-    train_data = process_train_data(train_path)
-    test_data = process_train_data(test_path, dv=train_data["dv"])
+    train_data = process_data(train_path)
+    test_data = process_data(test_path, dv=train_data["dv"])
     model_obj = train_and_predict(train_data["x"], train_data["y"], test_data['x'], test_data['y'])
     if save_model:
         save_pickle(f"{local_storage}/model.pickle", model_obj)
@@ -162,7 +158,7 @@ def complete_ml(
 def batch_inference(input_path, dv=None, model=None, local_storage='./results'):
     if not dv:
         dv = load_pickle(f"{local_storage}/dv.pickle")
-    data = process_inference_data(input_path, dv)
+    data = process_data(input_path, dv, with_target=False)
     if not model:
         model = load_pickle(f"{local_storage}/model.pickle")["model"]
     return predict_duration(data["x"], model)
@@ -170,5 +166,4 @@ def batch_inference(input_path, dv=None, model=None, local_storage='./results'):
 
 if __name__ == '__main__':
     data_path = "../00-data/yellow_tripdata_2021-01.parquet"
-    processed_data = process_train_data(data_path)
-    pass
+    processed_data = process_data(data_path)

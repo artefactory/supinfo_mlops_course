@@ -34,7 +34,7 @@ course' GitHub repository in the [introduction course](https://github.com/artefa
 First step before using prefect for orchestration is to transform our notebook into python files 
 following known good practices.
 
-**Exercise 1** : Convert notebook into python files (1/3)
+**Exercise 1** : Convert notebook into python files (1/4)
 
 Create/move the following functions in/to a file using the notebook's code and applying good code practices viewed :
 - load_data
@@ -43,36 +43,42 @@ Create/move the following functions in/to a file using the notebook's code and a
 - encode_categorical_columns
 - extract_x_y
 
-**Exercise 2** : Convert notebook into python files (2/3) 
+**Exercise 2** : Convert notebook into python files (2/4) 
 
 These steps constitute the data processing phase. \
-Create two `processing` functions as entrypoint for all these steps
+Create a unique `processing` functions as entrypoint for all these steps.
 
-- The first use all steps to `process_train_data`
-- The second don't compute target or filter outliers and will be used to `process_prediction_data` to predict in "production".
-
-The extract return `x`, `y` and `dv`. \
-The `dv` from `process_train_data` should be used as argument in `process_prediction_data` to transform the test data
+> :bulb: This function should handle the two following cases : \
+> **Fist case** : The data to process is destined to train a model : The target column is available \
+> **Second case** : The data to process is destined to prediction : The target column is not available
 
 
-**Exercise 3**: Convert notebook into python files (3/3)
+**Exercise 3**: Convert notebook into python files (3/4)
 
 Create five functions to complete the ML process : 
-- train model
-- evaluate model
-- predict
+- Train model
+- Evaluate model
+- Predict
 - An entrypoint function to perform all the previous steps  for training phase:
-  - process train data
-  - train model
-  - evaluate model
+  - Process data
+  - Train model
+  - Evaluate model
 - An entrypoint function for prediction:
-  - process prediction data
-  - predict
+  - Process data without target column
+  - Predict
 - Test your code with the downloaded data
 
-Hint : Add a save step using helpers, at the end of the ml pipeline to serialize your model and dict vectorizer.
-These two element will be loaded for batch prediction.
+> :bulb: Add a save/load step using `helpers.py` file, at the end of the ml pipeline to serialize your model and dict vectorizer.
+These two element should be loaded for batch prediction.
 
+
+**Exercise 4**: Convert notebook into python files (4/4)
+
+- Execute the notebook in state and keep/save the results
+- Test your entire code
+- Compare results against notebook' results
+
+> :bulb: You can import your main function inside the notebook to facilitate comparison
 
 ## Workflows orchestration with prefect : 
 
@@ -83,40 +89,45 @@ These two element will be loaded for batch prediction.
 - *exercise 4 : orchestration_03_machine_learning_workflow.py*
 - *exercise 5 : orchestration_04_prefect_deployment_objects.py*
 
-Helpers : 
-```
-@task(name="Load", tags=['Serialize'])
-def load_pickle(path: str):
-    with open(path, 'rb') as f:
-        loaded_obj = pickle.load(f)
-    return loaded_obj
 
-
-@task(name="Save", tags=['Serialize'])
-def save_pickle(path: str, obj: dict):
-    with open(path, 'wb') as f:
-        pickle.dump(obj, f)
-```
-
-
-**Exercise 1**: Set Up Prefect UI
+**Exercise 1**: Set Up Prefect UI (1/5)
 
 Before starting to implement tasks and flows with prefect, let's set up the UI in order to have a good visualization
 of our work.
 
 Steps : 
-- Start a local prefect server : `prefect orion start`
-- Set an API URL for your local server to make sure that your workflow will be tracked by this specific instance : `prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api`
+- Start a local prefect server : 
+```
+prefect orion start
+```
+- Set an API URL for your local server to make sure that your workflow will be tracked by this specific instance : 
+```
+prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api
+```
 
-Prefect database is stored at `~/.prefect/orion.db`
-If you want to reset the database, run `prefect orion database reset`
+Prefect database is stored at : 
+```
+~/.prefect/orion.db
+```
 
-**Exercise 2**: Create a data processing flow
+If you want to reset the database, run :
+```
+prefect orion database reset
+```
 
-Import flow and task object from prefect.
-- Use the decorators `@task` and `@flow` to create your first prefect flows :
-  - processing train data
-  - processing prediction data
+**Exercise 2**: Create a data processing flow (2/5)
+
+It is simple to create workflows with prefect. It uses @flow and @task decorators that can be directly import to
+wrap your functions.
+```
+@task()
+def my_function():
+  ...
+```
+
+- Use the decorators `@task` and `@flow` to create your first prefect flow : The Processing flow. \
+Prefect will try to use by default different thread to run each task. If you want sequential steps, introduce this
+dependencies through the name of each task output.
 - Test your code by calling the flows run with downloaded data
 - Visualize in the local prefect UI
 
@@ -124,26 +135,22 @@ Import flow and task object from prefect.
 Typing tasks in prefect is done as with any python code. \
 For flows, either use `validate_parameters=False`
 or define pydantic models for prefect to understand
-your NON DEFAULT typing (see extra section). \
+your NON DEFAULT typing (see extra section). 
 
 > But if all tasks are typed, since flows are just set of tasks, it should be all good if we don't want to add a layer of complexity \
 > `Default types` : str, int ...
 
 
-**Exercise 3**: Customize your flows
+**Exercise 3**: Customize your flows (3/5)
 
-You can configure the property and special behavior for your prefect tasks/flow in the decorator.
-For example, you can tell if you want to retry on a failure, set name or tags, etc...
+You can configure the properties and special behavior for your prefect tasks/flow in the decorator.
+For example, you can tell if you want to retry on a failure, set name or tags, etc... \
+An example is given in the `helpers.py` file.
 ```
 @task('name=failure_task', tags=['fails'], retries=3, retry_delay_seconds=60)
-def failure():
-    print('running')
-    if random.randint(1, 10) % 2 == 0:
-        raise ValueError("bad code")
+def func():
+  ...
 
-@flow(name='failure_flow', version='1.0')
-def test_failure():
-    failure()
 ```
 
 - Add names, tasks, and desired behavior to your tasks/flows
@@ -151,27 +158,27 @@ def test_failure():
 - Visualize in the local prefect UI
 
  
-**Exercise 4** : Create machine learning flows
+**Exercise 4** : Create machine learning flows (4/5)
 
 Create the complete ML process flow : 
-- process train data
-- train model
-- evaluate model
-- save model and vectorizer (dv) | use helpers
-- predict 
+- Process data
+- Train model
+- Evaluate model
+- Save model and vectorizer (dv) | use helpers
+- Predict 
 
 Create the prediction flow:
-- load model and vectorizer
-- process prediction data
-- predict
+- Load model and vectorizer
+- Process data without target column
+- Predict
 
 - Test your code
 - Visualize in the UI
 
 
-**Exercise 5** : Create flows deployments with prefect
+**Exercise 5** : Create flows deployments with prefect (5/5)
 
-Helper example :
+Example of code : 
 
 ```
 from prefect.deployments import Deployment
@@ -194,6 +201,7 @@ dep = Deployment.build_from_flow(
 )
 ```
 
+
 Now that all the workflows are defined, we can now schedule automatics runs for these pipelines. \
 Let's assume that we have a process that tells us that our model need to be retrained weekly based on 
 some performance analysis. We also receive data to predict each hour.
@@ -205,5 +213,39 @@ Use prefect deployment object in order to :
 ## More concepts with orchestration & prefect
 
 
+#### Prefect runners
 
+Prefect offer possibility to use different types or runners for flows in order to distribute the workload. \
+This course don't include any cloud resource, so there will only by Sequential and Concurrent runners available.
 
+```
+from prefect import flow
+from prefect.task_runners import SequentialTaskRunner, ConcurrentTaskRunner
+
+@flow(task_runner=SequentialTaskRunner)
+def my_flow():
+  independant_task_1()
+  independant_task_2()
+  independant_task_3()
+```
+
+- Try a flow (previous or simple custom) using different types of runners
+
+#### Custom typing with Pydantic
+
+It is possible to create custom validator for functions/flows inputs to helps prefect understand the 
+exact requirements needed for an input.
+
+```
+from pydantic import BaseModel, validator
+class CustomType(BaseModel):
+  input_1 : type
+  input_2 : type
+  ...
+  
+  @validator('input_1', 'input_2')
+  def make_specific_test():
+    ...
+```
+
+- Create typing for the previous prefect flows and test your code
