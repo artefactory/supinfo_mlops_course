@@ -1,6 +1,5 @@
 import os
-import random
-
+import config
 import numpy as np
 import pickle
 import pandas as pd
@@ -19,7 +18,7 @@ from prefect import task, flow
 
 
 @task(name='load_data', tags=['preprocessing'], retries=2, retry_delay_seconds=60)
-def load_data(path: str):
+def load_data(path: str) -> pd.DataFrame:
     return pd.read_parquet(path)
 
 
@@ -62,7 +61,7 @@ def encode_categorical_cols(
     the specified columns converted to categorical data type
     """
     if categorical_cols is None:
-        categorical_cols = ['PULocationID', 'DOLocationID', 'passenger_count']
+        categorical_cols = config.CATEGORICAL_VARS
     df[categorical_cols] = df[categorical_cols].fillna(-1).astype('int')
     df[categorical_cols] = df[categorical_cols].astype('str')
     return df
@@ -83,7 +82,7 @@ def extract_x_y(
     dictvectorizer object.
     """
     if categorical_cols is None:
-        categorical_cols = ['PULocationID', 'DOLocationID', 'passenger_count']
+        categorical_cols = config.CATEGORICAL_VARS
     dicts = df[categorical_cols].to_dict(orient='records')
 
     y = None
@@ -98,7 +97,7 @@ def extract_x_y(
 
 
 @flow(name="Data processing", retries=1, retry_delay_seconds=30)
-def process_data(path: str,  dv=None, with_target: bool = True):
+def process_data(path: str,  dv=None, with_target: bool = True) -> dict:
     """
     Load data from a parquet file
     Compute target(duration column) and apply threshold filters (optional)
@@ -126,7 +125,7 @@ def process_data(path: str,  dv=None, with_target: bool = True):
 def train_model(
         x_train: csr_matrix,
         y_train: np.ndarray
-):
+) -> LinearRegression:
     """Train and return a linear regression model"""
     lr = LinearRegression()
     lr.fit(x_train, y_train)
@@ -137,7 +136,7 @@ def train_model(
 def predict_duration(
         input_data: csr_matrix,
         model: LinearRegression
-):
+) -> np.ndarray:
     """
     Use trained linear regression model
     to predict target from input data
@@ -150,7 +149,7 @@ def predict_duration(
 def evaluate_model(
         y_true: np.ndarray,
         y_pred: np.ndarray
-):
+) -> float:
     """Calculate mean squared error for two arrays"""
     return mean_squared_error(y_true, y_pred, squared=False)
 
@@ -184,7 +183,7 @@ def train_and_predict(
         y_train,
         x_test,
         y_test
-):
+) -> dict:
     """Train model, predict values and calculate error"""
     model = train_model(x_train, y_train)
     prediction = predict_duration(x_test, model)
@@ -198,8 +197,8 @@ def complete_ml(
         test_path: str,
         save_model: bool = True,
         save_dv: bool = True,
-        local_storage: str = "./results"
-):
+        local_storage: str = config.LOCAL_STORAGE
+) -> None:
     """
     Load data and prepare sparse matrix (using dictvectorizer) for model training
     Train model, make predictions and calculate error
@@ -219,7 +218,7 @@ def complete_ml(
 
 
 @flow(name="Batch inference", retries=1, retry_delay_seconds=30)
-def batch_inference(input_path, dv=None, model=None, local_storage='./results'):
+def batch_inference(input_path, dv=None, model=None, local_storage=config.LOCAL_STORAGE):
     """
     Load model and dictvectorizer from folder
     Transforms input data with dictvectorizer
@@ -236,10 +235,8 @@ def batch_inference(input_path, dv=None, model=None, local_storage='./results'):
 
 if __name__ == "__main__":
 
-    train_path = "../00-data/yellow_tripdata_2021-01.parquet"
-    test_path = "../00-data/yellow_tripdata_2021-02.parquet"
-    inference_path = "../00-data/yellow_tripdata_2021-02.parquet"
-
-    complete_ml(train_path, test_path)
-    inference = batch_inference(inference_path)
-
+    complete_ml(
+        f"{config.DATA_DIR}/{config.TRAIN_DATA}",
+        f"{config.DATA_DIR}/{config.TEST_DATA}"
+    )
+    inference = batch_inference(f"{config.DATA_DIR}/{config.INFERENCE_DATA}")
