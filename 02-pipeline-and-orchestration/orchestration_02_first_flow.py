@@ -26,6 +26,10 @@ def compute_target(
         pickup_column: str = "tpep_pickup_datetime",
         dropoff_column: str = "tpep_dropoff_datetime"
 ) -> pd.DataFrame:
+    """
+    Compute the trip duration in minutes based
+    on pickup and dropoff time
+    """
     df["duration"] = df[dropoff_column] - df[pickup_column]
     df["duration"] = df["duration"].dt.total_seconds() / 60
     return df
@@ -37,6 +41,10 @@ def filter_outliers(
         min_duration: int = 1,
         max_duration: int = 60
 ) -> pd.DataFrame:
+    """
+    Remove rows corresponding to negative/zero
+    and too high target' values from the dataset
+    """
     return df[df['duration'].between(min_duration, max_duration)]
 
 
@@ -45,6 +53,11 @@ def encode_categorical_cols(
         df: pd.DataFrame,
         categorical_cols: List[str] = None
 ) -> pd.DataFrame:
+    """
+    Takes a Pandas dataframe and a list of categorical
+    column names, and returns dataframe with
+    the specified columns converted to categorical data type
+    """
     if categorical_cols is None:
         categorical_cols = ['PULocationID', 'DOLocationID', 'passenger_count']
     df[categorical_cols] = df[categorical_cols].fillna(-1).astype('int')
@@ -59,7 +72,13 @@ def extract_x_y(
         dv: DictVectorizer = None,
         with_target: bool = True
 ) -> dict:
-
+    """
+    Turns lists of mappings (dicts of feature names to feature values)
+    into sparse matrices for use with scikit-learn estimators
+    using Dictvectorizer object.
+    :return The sparce matrix, the target' values if needed and the
+    dictvectorizer object.
+    """
     if categorical_cols is None:
         categorical_cols = ['PULocationID', 'DOLocationID', 'passenger_count']
     dicts = df[categorical_cols].to_dict(orient='records')
@@ -77,6 +96,13 @@ def extract_x_y(
 
 @flow()
 def process_data(path: str,  dv=None, with_target: bool = True):
+    """
+    Load data from a parquet file
+    Compute target(duration column) and apply threshold filters (optional)
+    Turn features to sparce matrix
+    :return The sparce matrix, the target' values and the
+    dictvectorizer object if needed.
+    """
     df = load_data(path)
     if with_target:
         df1 = compute_target(df)
@@ -94,6 +120,7 @@ def train_model(
         x_train: csr_matrix,
         y_train: np.ndarray
 ):
+    """Train and return a linear regression model"""
     lr = LinearRegression()
     lr.fit(x_train, y_train)
     return lr
@@ -103,6 +130,11 @@ def predict_duration(
         input_data: csr_matrix,
         model: LinearRegression
 ):
+    """
+    Use trained linear regression model
+    to predict target from input data
+    :return array of predictions
+    """
     return model.predict(input_data)
 
 
@@ -110,6 +142,7 @@ def evaluate_model(
         y_true: np.ndarray,
         y_pred: np.ndarray
 ):
+    """Calculate mean squared error for two arrays"""
     return mean_squared_error(y_true, y_pred, squared=False)
 
 
@@ -130,6 +163,7 @@ def train_and_predict(
         x_test,
         y_test
 ):
+    """Train model, predict values and calculate error"""
     model = train_model(x_train, y_train)
     prediction = predict_duration(x_test, model)
     mse = evaluate_model(y_test, prediction)
@@ -143,6 +177,12 @@ def complete_ml(
         save_dv: bool = True,
         local_storage: str = "./results"
 ):
+    """
+    Load data and prepare sparse matrix (using dictvectorizer) for model training
+    Train model, make predictions and calculate error
+    Save model and dictvectorizer to a folder in pickle format
+    :return none
+    """
     if not os.path.exists(local_storage):
         os.makedirs(local_storage)
 
@@ -156,6 +196,12 @@ def complete_ml(
 
 
 def batch_inference(input_path, dv=None, model=None, local_storage='./results'):
+    """
+    Load model and dictvectorizer from folder
+    Transforms input data with dictvectorizer
+    Predict values using loaded model
+    :return array of predictions
+    """
     if not dv:
         dv = load_pickle(f"{local_storage}/dv.pickle")
     data = process_data(input_path, dv, with_target=False)

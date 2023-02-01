@@ -21,9 +21,17 @@ The machine learning phase is mainly constituted by the following steps :
 
 The data to use for this module can be downloaded from the [TLC Trip Record Data page](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
 To complete this module, you will need 03 samples of data :
-- `sample 1 example` : yellow trip 2021-01 data (to train model)
-- `sample 2 example` : yellow trip 2021-02 data (to evaluate model)
-- `sample 3 example` : yellow trip 2021-03 data (for prediction)
+- `sample 1 example` : [yellow trip 2021-01 data](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet) (to train model)
+- `sample 2 example` : [yellow trip 2021-02 data](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-02.parquet) (to evaluate model)
+- `sample 3 example` : [yellow trip 2021-03 data](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-03.parquet) (for prediction)
+
+> **Disclaimer** :
+> The volumes of data used in this module are not at all significant to have efficient models and 
+interpretable performances. Here we use data volumes that fit locally and allow pipelines building and fast execution.
+
+> **Data location** :
+> Please create a "00-data" folder in the course root directory and put the downloaded files inside. \
+> If names are different, please rename your files to "yellow_tripdata_2021-01.parquet" (2021-02 / 2021-03)
 
 A notebook implementing the machine learning steps to predict Taxi trip duration can be found in the 
 course' GitHub repository in the [introduction course](https://github.com/artefactory/supinfo_mlops_course/tree/master/01-intro).
