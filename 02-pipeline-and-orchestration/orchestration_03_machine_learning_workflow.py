@@ -235,8 +235,5 @@ def batch_inference(input_path, dv=None, model=None, local_storage=config.LOCAL_
 
 if __name__ == "__main__":
 
-    complete_ml(
-        f"{config.DATA_DIR}/{config.TRAIN_DATA}",
-        f"{config.DATA_DIR}/{config.TEST_DATA}"
-    )
-    inference = batch_inference(f"{config.DATA_DIR}/{config.INFERENCE_DATA}")
+    complete_ml(config.TRAIN_DATA, config.TEST_DATA)
+    inference = batch_inference(config.INFERENCE_DATA)

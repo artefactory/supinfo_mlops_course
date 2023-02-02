@@ -1,3 +1,4 @@
+import config
 from orchestration_03_machine_learning_workflow import complete_ml
 from orchestration_03_machine_learning_workflow import batch_inference
 
@@ -33,13 +34,14 @@ inference_deployment_every_minute = Deployment.build_from_flow(
 
 if __name__ == "__main__":
 
+    print(config.DATA_DIR)
+    print(config.LOCAL_STORAGE)
+    print(config.TRAIN_DATA)
+    print(config.TEST_DATA)
+    print(config.INFERENCE_DATA)
+
     modeling_deployment_every_sunday.apply()
     inference_deployment_every_minute.apply()
 
-    train_path = "../00-data/yellow_tripdata_2021-01.parquet"
-    test_path = "../00-data/yellow_tripdata_2021-02.parquet"
-    inference_path = "../00-data/yellow_tripdata_2021-02.parquet"
-
-    complete_ml(train_path, test_path)
-    inference = batch_inference(inference_path)
-
+    complete_ml(config.TRAIN_DATA, config.TEST_DATA)
+    inference = batch_inference(config.INFERENCE_DATA)

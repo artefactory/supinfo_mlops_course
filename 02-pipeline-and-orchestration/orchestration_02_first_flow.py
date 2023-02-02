@@ -212,4 +212,4 @@ def batch_inference(input_path, dv=None, model=None, local_storage=config.LOCAL_
 
 
 if __name__ == '__main__':
-    processed_data = process_data(f"{config.DATA_DIR}/{config.TRAIN_DATA}")
+    processed_data = process_data(config.TRAIN_DATA)
