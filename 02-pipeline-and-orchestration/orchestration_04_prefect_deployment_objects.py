@@ -34,12 +34,6 @@ inference_deployment_every_minute = Deployment.build_from_flow(
 
 if __name__ == "__main__":
 
-    print(config.DATA_DIR)
-    print(config.LOCAL_STORAGE)
-    print(config.TRAIN_DATA)
-    print(config.TEST_DATA)
-    print(config.INFERENCE_DATA)
-
     modeling_deployment_every_sunday.apply()
     inference_deployment_every_minute.apply()
 
