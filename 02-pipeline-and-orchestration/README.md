@@ -213,7 +213,8 @@ dep = Deployment.build_from_flow(
     flow=<existing flow>,
     version="<random version>",
     tags=["random tag"],
-    schedule=null
+    schedule=null,
+    parameters={...}
 )
 ```
 
@@ -225,6 +226,13 @@ some performance analysis. We also receive data to predict each hour.
 Use prefect deployment object in order to : 
 - Schedule complete ml process to run weekly
 - Schedule prediction pipeline to run each hour
+
+> To submit a deployment object, it needs to be applied using the `apply` parameter or the `.apply()` method.
+> A **prefect agent** is then needed to initiate the automatic runs.
+> When a deployment is created, it is by default added to the **default** work queue
+> ```
+> prefect agent start default
+> ```
 
 ![](images/deployment.png)
 
