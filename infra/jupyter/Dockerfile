@@ -1,15 +1,21 @@
-FROM jupyter/datascience-notebook
+FROM jupyter/minimal-notebook
 
 # Set working directory to /app
 WORKDIR /app
 
 # Copying and installing course requirements
-COPY ./devops/lesson/requirements.txt ./requirements.txt
-COPY ./devops/lesson/bin ./bin
+COPY ./infra/jupyter/requirements.txt ./requirements.txt
+COPY ./infra/jupyter/bin ./bin
+
+USER root
+RUN apt update
+RUN apt install build-essential -y
+USER jovyan
+
 RUN bash ./bin/install_requirements.sh
 
 # Copying lesson contents
-COPY ./notebooks/ ./notebooks
+COPY ./lessons/ ./lessons
 
 RUN mkdir outputs
 

@@ -22,11 +22,11 @@ build-all: build-lesson build-mlflow
 
 build-lesson:
 	@echo "Building lesson jupyter lab container..."
-	@docker build -t mlops_notebooks_supinfo -f devops/lesson/Dockerfile .
+	@docker build -t mlops_notebooks_supinfo -f infra/jupyter/Dockerfile .
 
 build-mlflow:
 	@echo "Building lesson mlflow container..."
-	@docker build -t mlops_mlflow_supinfo ./devops/mlflow_server/
+	@docker build -t mlops_mlflow_supinfo ./infra/mlflow_server/
 
 remove-all:
 	@echo "Removing all course images..."
@@ -36,10 +36,10 @@ remove-all:
 run-all: run-lesson run-mlflow
 
 run-lesson:
-	./devops/lesson/bin/run_lab.sh
+	./infra/jupyter/bin/run_lab.sh
 
 run-mlflow:
-	./devops/mlflow_server/run_server.sh
+	./infra/mlflow_server/run_server.sh
 
 stop-all:
 	@echo "Stopping all course containers..."
@@ -48,8 +48,8 @@ stop-all:
 
 clean-mlflow:
 	@echo "Removing all mlflow data..."
-	-@rm -rf ./devops/mlflow_server/local/artifacts
-	-@rm -rf ./devops/mlflow_server/local/mlflow.db
+	-@rm -rf ./infra/mlflow_server/local/artifacts
+	-@rm -rf ./infra/mlflow_server/local/mlflow.db
 
 #################
 # 	 	CI	    #
