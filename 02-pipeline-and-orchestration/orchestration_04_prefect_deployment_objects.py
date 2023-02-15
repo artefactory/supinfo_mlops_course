@@ -19,7 +19,11 @@ modeling_deployment_every_sunday = Deployment.build_from_flow(
     flow=complete_ml,
     version="1.0",
     tags=["model"],
-    schedule=CronSchedule(cron="0 0 * * 0")
+    schedule=CronSchedule(cron="0 0 * * 0"),
+    parameters={
+        "train_path": config.TRAIN_DATA,
+        "test_path": config.TEST_DATA,
+    }
 )
 
 
@@ -28,7 +32,10 @@ inference_deployment_every_minute = Deployment.build_from_flow(
     flow=batch_inference,
     version="1.0",
     tags=["inference"],
-    schedule=IntervalSchedule(interval=600)
+    schedule=IntervalSchedule(interval=600),
+    parameters={
+        "input_path": config.INFERENCE_DATA
+    }
 )
 
 
@@ -36,6 +43,3 @@ if __name__ == "__main__":
 
     modeling_deployment_every_sunday.apply()
     inference_deployment_every_minute.apply()
-
-    complete_ml(config.TRAIN_DATA, config.TEST_DATA)
-    inference = batch_inference(config.INFERENCE_DATA)
