@@ -18,15 +18,15 @@ Data scientists and ML engineers. Also software engineers and data engineers int
 
 ### Timeline
 
-Course start: ?
-
+Course start: March 8th
+Course end: March 16th
+Final project presentation: March 31st
 
 ## Syllabus
 
 ### [Module 1: Introduction](01-intro)
 
 * What is MLOps
-* MLOps maturity model
 * Why do we need MLOps
 * Running example: NY Taxi trips dataset
 * Course overview
@@ -80,10 +80,10 @@ Course start: ?
 
 * End-to-end project with all the things above
 
-
 ## Instructors
 
 - El Hamri Amale
 - Guidi Ariel
 - Quinquet Guillaume
 - Si Larbi Karim
+- Deschamps Mael

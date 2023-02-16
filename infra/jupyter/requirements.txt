@@ -1,0 +1,10 @@
+prefect
+seaborn
+scikit-learn
+pandas
+mlflow
+gdown
+great_expectations
+# deployment
+fastapi
+uvicorn
