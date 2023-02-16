@@ -80,10 +80,10 @@ Final project presentation: March 31st
 
 * End-to-end project with all the things above
 
-
 ## Instructors
 
 - El Hamri Amale
 - Guidi Ariel
 - Quinquet Guillaume
 - Si Larbi Karim
+- Deschamps Mael
