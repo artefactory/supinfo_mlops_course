@@ -27,7 +27,6 @@ Final project presentation: March 31st
 ### [Module 1: Introduction](01-intro)
 
 * What is MLOps
-* MLOps maturity model
 * Why do we need MLOps
 * Running example: NY Taxi trips dataset
 * Course overview
