@@ -18,9 +18,9 @@ remove-network:
 	@echo "Removing the course docker network..."
 	-@docker network rm mlops-crashcourse-supinfo
 
-build-all: build-lesson build-mlflow
+build-all: build-jupyter build-mlflow
 
-build-lesson:
+build-jupyter:
 	@echo "Building lesson jupyter lab container..."
 	@docker build -t mlops_notebooks_supinfo -f infra/jupyter/Dockerfile .
 
