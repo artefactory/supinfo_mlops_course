@@ -18,8 +18,9 @@ Data scientists and ML engineers. Also software engineers and data engineers int
 
 ### Timeline
 
-Course start: ?
-
+Course start: March 8th
+Course end: March 16th
+Final project presentation: March 31st
 
 ## Syllabus
 
