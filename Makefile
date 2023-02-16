@@ -33,9 +33,9 @@ remove-all:
 	-@docker image rm mlops_notebooks_supinfo
 	-@docker image rm mlops_mlflow_supinfo
 
-run-all: run-lesson run-mlflow
+run-all: run-jupyter run-mlflow
 
-run-lesson:
+run-jupyter:
 	./infra/jupyter/bin/run_lab.sh
 
 run-mlflow:
