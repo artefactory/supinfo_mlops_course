@@ -75,13 +75,15 @@ Before starting to implement tasks and flows with prefect, let's set up the UI i
 of our work.
 
 Steps : 
-- Start a local prefect server : 
-```
-prefect orion start
-```
+
 - Set an API URL for your local server to make sure that your workflow will be tracked by this specific instance : 
 ```
-prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api
+prefect config set PREFECT_API_URL=http://0.0.0.0:4200/api
+```
+
+- Start a local prefect server : 
+```
+prefect orion start --host 0.0.0.0
 ```
 
 Prefect database is stored at : 
