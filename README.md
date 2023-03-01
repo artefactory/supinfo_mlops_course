@@ -24,7 +24,7 @@ Final project presentation: March 31st
 
 ## Syllabus
 
-### [Module 1: Introduction](01-intro)
+### [Module 1: Introduction](lessons/01-intro)
 
 * What is MLOps
 * Why do we need MLOps
@@ -35,7 +35,7 @@ Final project presentation: March 31st
 * Homework
 
 
-### [Module 2: Pipeline and Orchestration](02-pipeline-and-orchestration)
+### [Module 2: Pipeline and Orchestration](lessons/02-pipeline-and-orchestration)
 
 * Introduction to workflows orchestration
 * Introduction to Prefect
@@ -46,7 +46,7 @@ Final project presentation: March 31st
 * Homework
 
 
-### [Module 3: Data Management](03-data-management)
+### [Module 3: Data Management](lessons/03-data-management)
 
 * Testing Data Quality
 * Creating Data Pipelines
@@ -57,7 +57,7 @@ Final project presentation: March 31st
 * Homework
 
 
-### [Module 4: Model and Experiment Management](04-model-and-experiment-management)
+### [Module 4: Model and Experiment Management](lessons/04-model-and-experiment-management)
 
 * Experiment tracking intro
 * What is MLflow
@@ -68,7 +68,7 @@ Final project presentation: March 31st
 * Homework
 
 
-### [Module 5: Model Deployment](05-model-deployment)
+### [Module 5: Model Deployment](lessons/05-model-deployment)
 
 * Three ways of model deployment: Online (web and streaming) and offline (batch)
 * Web service: model deployment with Flask
@@ -76,7 +76,7 @@ Final project presentation: March 31st
 * Batch: scoring data offline
 
 
-### [Module 6: Practice](06-practices)
+### [Module 6: Practice](lessons/06-practice)
 
 * End-to-end project with all the things above
 
