@@ -35,4 +35,15 @@ course' GitHub repository in the [introduction course](https://github.com/artefa
 
 Since the main focus of the course is not Machine Learning itself, let's just run the notebook in your local jupyter container.
 
-#TODO: put clear instructions
+1. First, let's create our jupyter lab image and network by running
+```bash
+make prepare-mlops-crashcourse
+```
+
+2. Then, let's create our local jupyter lab container by running
+```bash
+make launch-mlops-crashcourse
+```
+You will need to pass the token 'MLOPS' to your jupyter lab UI
+
+3. Finally, go to `lessons/01-intro/practice-intro-supinfo.ipynb` and try running and understanding the modelization implementation
