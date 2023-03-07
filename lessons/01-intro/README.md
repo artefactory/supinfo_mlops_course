@@ -46,4 +46,4 @@ make launch-mlops-crashcourse
 ```
 You will need to pass the token 'MLOPS' to your jupyter lab UI
 
-3. Finally, go to `lessons/01-intro/practice-intro-supinfo.ipynb`and try running and understanding the modelization implementation
+3. Finally, go to `lessons/01-intro/practice-intro-supinfo.ipynb` and try running and understanding the modelization implementation
