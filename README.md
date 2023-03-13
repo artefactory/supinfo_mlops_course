@@ -70,10 +70,10 @@ Final project presentation: March 31st
 
 ### [Module 5: Model Deployment](05-model-deployment)
 
-* Three ways of model deployment: Online (web and streaming) and offline (batch)
-* Web service: model deployment with Flask
-* Streaming: consuming events with AWS Kinesis and Lambda
-* Batch: scoring data offline
+* Web service: model deployment with FastAPI
+* Docker: containerizing a web service
+* MLflow: retieving a model from the model registry
+* Locust: load testing a web service
 
 
 ### [Module 6: Practice](06-practices)
