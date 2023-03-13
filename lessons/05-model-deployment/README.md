@@ -125,7 +125,7 @@ Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlo
         ```
 
 7. Once you're done with this simple version, your turn to build a more complex version of the api that pulls the model from the running MLFlow server.
-    >> **Note**: You can find the solution to this lab in the `solution.zip`.
+    > **Note**: You can find the solution to this lab in the `solution.zip`.
 
 8. Locust inside the jupyter container (you should be inside the `05-model-deployment` directory):
     1. Run locust:
