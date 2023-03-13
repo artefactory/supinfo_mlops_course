@@ -16,6 +16,11 @@ def get_logger(logging_level=logging.INFO, logger_name: str = "model_deployment_
     return logger
 
 
+def is_docker() -> bool:
+    cgroup = Path("/proc/self/cgroup")
+    return Path('/.dockerenv').is_file() or cgroup.is_file() and cgroup.read_text().find("docker") > -1
+
+
 # LOGGING
 LOGGER_LEVEL = "INFO"
 logger = get_logger(logging_level=getattr(logging, LOGGER_LEVEL))
@@ -40,7 +45,7 @@ CATEGORICAL_VARS = ['PULocationID', 'DOLocationID', 'passenger_count']
 MODEL_VERSION = "0.0.1"
 
 # MLFLOW
-MLFLOW_TRACKING_URI = "http://localhost:5001"
+MLFLOW_TRACKING_URI = "http://mlflow:5000" if is_docker() else "http://localhost:5000"
 MLFLOW_EXPERIMENT_NAME = "trip_duration_prediction"
 REGISTERED_MODEL_NAME = "trip_duration_model"
 
