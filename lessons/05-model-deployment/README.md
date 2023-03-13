@@ -106,7 +106,7 @@ Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlo
             ```
     2. Run the docker image:
         ```bash
-        docker run -itd --rm --name prediction_server -p 8000:8000 prediction_server
+        docker run -itd --rm --name prediction_server -p 8001:8001 --network mlops-crashcourse-supinfo prediction_server
         ```
     3. Check if the container is running:
         ```bash
@@ -115,11 +115,20 @@ Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlo
     4. Check if the api is running:
         - go to `http://localhost:8001/docs` to see the documentation of the api (where you can also test the api)
 
-    5. you can stop the prediction server:
+    5. You can send requests to the running dockerized api using python (example inside container openning another terminal):
+        - change the host in `/app/lessons/05-model-deployment/bin/post_payload.py` to `http://prediction_server:8001`
+
+        - then just like previously you can run:
+            ```bash
+            cd /app/lessons/05-model-deployment/ &&
+            python bin/post_payload.py
+            ```
+
+    6. you can stop the prediction server from the host machine:
         ```bash
         docker stop prediction_server
         ```
-    6. you can remove the prediction server image:
+    7. you can remove the prediction server image from the host machine:
         ```bash
         docker image rm prediction_server
         ```

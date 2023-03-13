@@ -1,7 +1,7 @@
 import requests
 from requests.exceptions import HTTPError
 
-from config import logger, is_docker
+from config import logger
 
 
 def post_payload(url: str, payload: dict):
@@ -17,5 +17,7 @@ def post_payload(url: str, payload: dict):
 
 if __name__ == "__main__":
     example_payload = {"PULocationID": 264, "DOLocationID": 264, "passenger_count": 1}
-    url = "http://localhost:8000/predict" if is_docker() else "http://localhost:8001/predict"
+    url = "http://localhost:8000/predict"
+    # For the dockerized version:
+    # url = "http://prediction_server:8001/predict"
     response = post_payload(url=url, payload=example_payload)
