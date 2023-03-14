@@ -12,7 +12,7 @@ Data scientists and ML engineers. Also software engineers and data engineers int
 
 * Python
 * Docker
-* Being comfortable with command line 
+* Being comfortable with command line
 * Prior exposure to machine learning
 * Prior programming experience (at least 1+ year)
 
@@ -72,7 +72,7 @@ Final project presentation: March 31st
 
 * Web service: model deployment with FastAPI
 * Docker: containerizing a web service
-* MLflow: retieving a model from the model registry
+* MLflow: retrieving a model from the model registry
 * Locust: load testing a web service
 
 
