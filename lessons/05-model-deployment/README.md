@@ -8,13 +8,13 @@ In this module we'll learn how to deploy a model in production. We'll learn how 
 ## Model Deployment lab
 
 ### Goal of the lab
-We want to have a REST API running that can predict *trip duration* for the NYC Taxi given the *pickup locatoin ID*, *the dropoff location ID* and the *number of passengers*.
+We want to have a REST API running that can predict *trip duration* for the NYC Taxi given the *pickup location ID*, *the drop off location ID* and the *number of passengers*.
 
 
 ### Lab
 Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlops-crashcourse`)
 1. Go inside jupyter container (starting in `/app` directory)
-    - either by using VSCODE's `Remote Explorer` entension and  `attaching to running container`
+    - either by using VSCODE's `Remote Explorer` extension (you can download it [here](https://marketplace.visualstudio.com/items?itemName=ms-vscode.remote-explorer)) and  `attaching to running container`
     - or simply by going to the jupyter lab on `http://localhost:10000` on your browser
 2. Go to `lessons/05-model-deployment`:
     ```bash
@@ -46,13 +46,13 @@ Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlo
     ```bash
     uvicorn main:app --reload --host 0.0.0.0 --port 8000
     ```
-    Doing so you'll have the api running on `http://localhost:8000` sice this port is forwarded to the host's port 8000 you can interact with the api from your host machine.
+    Doing so you'll have the api running on `http://localhost:8000` since this port is forwarded to the host's port 8000 you can interact with the api from your host machine.
 
     1. You can go to `http://localhost:8000/docs` to see the documentation of the api (where you can also test the api)
 
     2. You can also use `curl` to test the api's health : `curl http://localhost:8000`
 
-    3. You can send requests to the running api using python (example inside container openning another terminal):
+    3. You can send requests to the running api using python (example inside container opening another terminal):
         ```bash
         cd /app/lessons/05-model-deployment/ &&
         python bin/post_payload.py
@@ -68,7 +68,7 @@ Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlo
           "DOLocationID": 264,
           "passenger_count": 2}'
         ```
-        - (optionnal) create payload file creating a file `test_payload.json` with the following content:
+        - (optional) create payload file creating a file `test_payload.json` with the following content:
         ```json
         {"PULocationID": 264,
          "DOLocationID": 264,
@@ -115,7 +115,7 @@ Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlo
     4. Check if the api is running:
         - go to `http://localhost:8001/docs` to see the documentation of the api (where you can also test the api)
 
-    5. You can send requests to the running dockerized api using python (example inside container openning another terminal):
+    5. You can send requests to the running dockerized api using python (example inside container opening another terminal):
         - change the host in `/app/lessons/05-model-deployment/bin/post_payload.py` to `http://prediction_server:8001`
 
         - then just like previously you can run:
@@ -133,14 +133,17 @@ Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlo
         docker image rm prediction_server
         ```
 
-7. Once you're done with this simple version, your turn to build a more complex version of the api that pulls the model from the running MLFlow server.
-    > **Note**: You can find the solution to this lab in the `solution.zip`.
-
-8. Locust inside the jupyter container (you should be inside the `05-model-deployment` directory):
-    1. Run locust:
+7. Locust inside the jupyter container (you should be inside the `05-model-deployment` directory):
+    1. Run locust targeting the api running:
         ```bash
         locust -f ./locust/locustfile.py --host=http://localhost:8000
         ```
-    3. Go to `http://localhost:8089` to see the locust dashboard
-    4. Start the swarm
+    2. Go to `http://localhost:8089` on your browser to see the locust dashboard.
+        - You can define the target number of users (peak concurrency), the spawn rate (users started/second) and how long the test should run (you might need to expend the *Advanced options* item).
+    
+    3. Start the swarm
+    4. You can see the results of the test on the dashboard. And save the results to a file by clicking on the *Download data* tab and *Download Report*.
 
+### Your turn!
+Once you're done with this simple version, your turn to build a more complex version of the api that pulls the model from the running MLFlow server.
+> **Note**: You can find the solution to this lab in the `solution.zip`.
