@@ -1,14 +1,13 @@
-from typing import Union, List
+from typing import List, Union
 
 import pandas as pd
-
 from config import CATEGORICAL_VARS, logger
 
 
 def _compute_target(
-        df: pd.DataFrame,
-        pickup_column: str = "tpep_pickup_datetime",
-        dropoff_column: str = "tpep_dropoff_datetime"
+    df: pd.DataFrame,
+    pickup_column: str = "tpep_pickup_datetime",
+    dropoff_column: str = "tpep_dropoff_datetime",
 ) -> pd.DataFrame:
     """
     Compute the trip duration in minutes based
@@ -20,23 +19,16 @@ def _compute_target(
     return df
 
 
-def _filter_outliers(
-        df: pd.DataFrame,
-        min_duration: int = 1,
-        max_duration: int = 60
-) -> pd.DataFrame:
+def _filter_outliers(df: pd.DataFrame, min_duration: int = 1, max_duration: int = 60) -> pd.DataFrame:
     """
     Remove rows corresponding to negative/zero
     and too high target' values from the dataset
     """
     logger.info("Filtering outliers...")
-    return df[df['duration'].between(min_duration, max_duration)]
+    return df[df["duration"].between(min_duration, max_duration)]
 
 
-def _encode_categorical_cols(
-        df: pd.DataFrame,
-        categorical_cols: List[str] = None
-) -> pd.DataFrame:
+def _encode_categorical_cols(df: pd.DataFrame, categorical_cols: List[str] = None) -> pd.DataFrame:
     """
     Takes a Pandas dataframe and a list of categorical
     column names, and returns dataframe with
@@ -45,14 +37,16 @@ def _encode_categorical_cols(
     logger.info("Encoding categorical columns...")
     if categorical_cols is None:
         categorical_cols = CATEGORICAL_VARS
-    df[categorical_cols] = df[categorical_cols].fillna(-1).astype('int')
-    df[categorical_cols] = df[categorical_cols].astype('category')
+    df[categorical_cols] = df[categorical_cols].fillna(-1).astype("int")
+    df[categorical_cols] = df[categorical_cols].astype("category")
     return df
 
 
-def prepare_data(data: Union[pd.DataFrame, dict],
-                 target_col: str = "duration",
-                 categorical_cols: list = CATEGORICAL_VARS) -> tuple:
+def prepare_data(
+    data: Union[pd.DataFrame, dict],
+    target_col: str = "duration",
+    categorical_cols: list = CATEGORICAL_VARS,
+) -> tuple:
     """Prepare data for training or prediction
     Args:
         data (Union[pd.DataFrame, dict]): data to prepare, dict when online inference.
@@ -72,5 +66,5 @@ def prepare_data(data: Union[pd.DataFrame, dict],
     elif isinstance(data, dict):
         data = _encode_categorical_cols(pd.DataFrame([data]), categorical_cols=categorical_cols)
         target = None
-    feature_dicts = data[categorical_cols].to_dict(orient='records')
+    feature_dicts = data[categorical_cols].to_dict(orient="records")
     return feature_dicts, target

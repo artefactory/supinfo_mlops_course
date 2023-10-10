@@ -1,17 +1,16 @@
 from typing import List
 
 import pandas as pd
-from sklearn.linear_model import LinearRegression
+from config import logger
 from sklearn.feature_extraction import DictVectorizer
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.pipeline import Pipeline, make_pipeline
-
-from config import logger
 
 
 def fit_pipeline(feature_dicts: List[dict], target: pd.Series) -> Pipeline:
     """Fit a pipeline that transforms a list of dicts into a s
-       parse matrix and then fits a linear regression model
+    parse matrix and then fits a linear regression model
     """
     logger.info("Fitting pipeline...")
     pipeline = make_pipeline(DictVectorizer(), LinearRegression(), verbose=True)

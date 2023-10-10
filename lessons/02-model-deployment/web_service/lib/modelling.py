@@ -1,11 +1,9 @@
-from sklearn.pipeline import Pipeline
-from lib.preprocessing import prepare_data
-
 from app_config import logger
+from lib.preprocessing import prepare_data
+from sklearn.pipeline import Pipeline
 
 
-def run_inference(payload: dict,
-                  pipeline: Pipeline) -> float:
+def run_inference(payload: dict, pipeline: Pipeline) -> float:
     """
     Takes a pre-fitted pipeline (dictvectorizer + linear regression model)
     outputs the computed trip duration in minutes.

@@ -1,9 +1,14 @@
-from config import PATH_TRAIN_DATA, PATH_TEST_DATA, PATH_LOCAL_MODELS, MODEL_VERSION, logger
-from lib.preprocessing import prepare_data
+from config import (
+    MODEL_VERSION,
+    PATH_LOCAL_MODELS,
+    PATH_TEST_DATA,
+    PATH_TRAIN_DATA,
+    logger,
+)
 from lib.data_loading import load_data
-from lib.modelling import fit_pipeline, predict_pipeline, compute_rmse
+from lib.modelling import compute_rmse, fit_pipeline, predict_pipeline
+from lib.preprocessing import prepare_data
 from lib.utils import save_pipeline
-
 
 if __name__ == "__main__":
     train_data = load_data(path=PATH_TRAIN_DATA)

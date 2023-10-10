@@ -6,11 +6,11 @@
 
 Welcome to the first exercise where you will explore the tool [Great Expectations](https://greatexpectations.io/) to set-up automated Data Quality checks. Great Expectations (or GX) is an open-source data validation and documentation tool that allows users to define expected structure, content, and constraints of their data to automatically validate that they actually meets those expectations, using Python code. This helps users ensure that their data is clean, accurate, and ready for analysis or modeling.
 
-In this exercise we will follow the four steps of GX tutorial, applied to our NYC Taxi dataset. 
+In this exercise we will follow the four steps of GX tutorial, applied to our NYC Taxi dataset.
 1) Setup Great Expectations
 2) Connect datasource
 3) Define Expectations
-4) Validate data  
+4) Validate data
 
 Please follow the notebooks 03-01-setup-quality-tests to complete this exercise.
 

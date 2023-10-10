@@ -8,7 +8,7 @@ An ultimate goal for this use case can be to predict in real time trips duration
 but for simplicity, in this module, we assume that we need batch prediction. The data for which we need predictions
 will be stored in a file for ingestion in the trained model.
 
-The machine learning phase is mainly constituted by the following steps : 
+The machine learning phase is mainly constituted by the following steps :
 - data processing
 - model training
 - model evaluation
@@ -21,7 +21,7 @@ To complete this module, you will need 03 samples of data :
 - `sample 3 example` : [yellow trip 2021-03 data](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-03.parquet) (for prediction)
 
 > **Disclaimer** :
-> The volumes of data used in this module are not at all significant to have efficient models and 
+> The volumes of data used in this module are not at all significant to have efficient models and
 interpretable performances. Here we use data volumes that fit locally and allow pipelines building and fast execution but we don't focus on model performance and interpretability because it is not the main focus of this course.
 
 > **Data location** :
@@ -30,7 +30,7 @@ interpretable performances. Here we use data volumes that fit locally and allow 
 
 ## Notebook execution
 
-A notebook implementing the machine learning steps to predict Taxi trip duration can be found in the 
+A notebook implementing the machine learning steps to predict Taxi trip duration can be found in the
 course' GitHub repository in the [introduction course](https://github.com/artefactory/supinfo_mlops_course/blob/master/lessons/01-intro).
 
 Since the main focus of the course is not Machine Learning itself, let's just run the notebook in your local jupyter container.

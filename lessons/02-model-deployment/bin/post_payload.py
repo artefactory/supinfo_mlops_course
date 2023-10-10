@@ -1,7 +1,6 @@
 import requests
-from requests.exceptions import HTTPError
-
 from config import logger
+from requests.exceptions import HTTPError
 
 
 def post_payload(url: str, payload: dict):

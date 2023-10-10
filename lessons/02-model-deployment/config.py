@@ -9,7 +9,7 @@ def get_logger(logging_level=logging.INFO, logger_name: str = "model_deployment_
     logger.setLevel(logging_level)
     ch = logging.StreamHandler()
     ch.setLevel(logging_level)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
@@ -18,7 +18,7 @@ def get_logger(logging_level=logging.INFO, logger_name: str = "model_deployment_
 
 def is_docker() -> bool:
     cgroup = Path("/proc/self/cgroup")
-    return Path('/.dockerenv').is_file() or cgroup.is_file() and cgroup.read_text().find("docker") > -1
+    return Path("/.dockerenv").is_file() or cgroup.is_file() and cgroup.read_text().find("docker") > -1
 
 
 # LOGGING
@@ -41,7 +41,7 @@ INFERENCE_DATA_URL = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tri
 PATH_INFERENCE_DATA = PATH_LOCAL_DATA / "yellow_tripdata_2021-03.parquet"
 
 # MISC
-CATEGORICAL_VARS = ['PULocationID', 'DOLocationID', 'passenger_count']
+CATEGORICAL_VARS = ["PULocationID", "DOLocationID", "passenger_count"]
 MODEL_VERSION = "0.0.1"
 
 # MLFLOW

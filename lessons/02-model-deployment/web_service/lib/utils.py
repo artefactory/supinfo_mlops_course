@@ -1,5 +1,4 @@
 import joblib
-
 from app_config import logger
 
 

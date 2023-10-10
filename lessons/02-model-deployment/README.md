@@ -28,11 +28,11 @@ Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlo
     <summary>Details on the init</summary>
     <br>
     The init will do the following:
-    <ul> 
-        <li> install the dependencies for this lesson 
-        <li> pull the data from internet 
+    <ul>
+        <li> install the dependencies for this lesson
+        <li> pull the data from internet
         <li> build a local model that is saved in `web_service/local_models/`
-        <li> copy this model to the shared volume 
+        <li> copy this model to the shared volume
         <li> push a model to the running MLFlow server and register it as production
     </ul>
     <br>
@@ -75,7 +75,7 @@ Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlo
          "passenger_count": 2}
         ```
 
-        - or using `cat`: 
+        - or using `cat`:
         ```bash
         cat << EOF > test_payload.json
         {
@@ -85,7 +85,7 @@ Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlo
         }
         EOF
         ```
-        
+
         - then you can send request using the payload file:
         ```bash
         curl -X POST \
@@ -140,7 +140,7 @@ Once the infra is running (`make prepare-mlops-crashcourse` and `make launch-mlo
         ```
     2. Go to `http://localhost:8089` on your browser to see the locust dashboard.
         - You can define the target number of users (peak concurrency), the spawn rate (users started/second) and how long the test should run (you might need to expend the *Advanced options* item).
-    
+
     3. Start the swarm
     4. You can see the results of the test on the dashboard. And save the results to a file by clicking on the *Download data* tab and *Download Report*.
 

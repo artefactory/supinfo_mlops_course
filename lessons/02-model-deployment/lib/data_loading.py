@@ -1,7 +1,6 @@
 from urllib import request
 
 import pandas as pd
-
 from config import logger
 
 

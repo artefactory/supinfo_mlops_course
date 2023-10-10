@@ -1,15 +1,16 @@
+from app_config import (
+    APP_DESCRIPTION,
+    APP_TITLE,
+    APP_VERSION,
+    MODEL_VERSION,
+    PATH_TO_PIPELINE,
+)
 from fastapi import FastAPI
-from pydantic import BaseModel
-
 from lib.modelling import run_inference
 from lib.utils import load_pipeline
-from app_config import (MODEL_VERSION, APP_TITLE, APP_DESCRIPTION, APP_VERSION,
-                        PATH_TO_PIPELINE)
+from pydantic import BaseModel
 
-
-app = FastAPI(title=APP_TITLE,
-              description=APP_DESCRIPTION,
-              version=APP_VERSION)
+app = FastAPI(title=APP_TITLE, description=APP_DESCRIPTION, version=APP_VERSION)
 
 
 class InputData(BaseModel):
@@ -27,8 +28,7 @@ pipeline = load_pipeline(PATH_TO_PIPELINE)
 
 @app.get("/")
 def home():
-    return {"health_check": "OK",
-            "model_version": MODEL_VERSION}
+    return {"health_check": "OK", "model_version": MODEL_VERSION}
 
 
 @app.post("/predict", response_model=PredictionOut, status_code=201)

@@ -1,8 +1,12 @@
+from config import (
+    INFERENCE_DATA_URL,
+    PATH_INFERENCE_DATA,
+    PATH_TEST_DATA,
+    PATH_TRAIN_DATA,
+    TEST_DATA_URL,
+    TRAIN_DATA_URL,
+)
 from lib.data_loading import download_data_from_url
-from config import (INFERENCE_DATA_URL, PATH_INFERENCE_DATA,
-                    TRAIN_DATA_URL, PATH_TRAIN_DATA,
-                    TEST_DATA_URL, PATH_TEST_DATA)
-
 
 if __name__ == "__main__":
     # train data

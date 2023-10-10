@@ -1,6 +1,6 @@
 # Machine learning pipelines and Orchestration
 
-> **Version** : 
+> **Version** :
 > This module has been created using Prefect 2.7.9
 
 ## Intro and Use case Reminder
@@ -10,7 +10,7 @@ Can be found in the [previous lesson](https://github.com/artefactory/supinfo_mlo
 ## From notebook to Workflows :
 #### *e.g. solution : orchestration_00_machine_learning.py*
 
-First step before using prefect for orchestration is to transform our notebook into python files 
+First step before using prefect for orchestration is to transform our notebook into python files
 following known good practices.
 
 **Exercise 1** : Convert notebook into python files (1/4)
@@ -22,7 +22,7 @@ Create/move the following functions in/to a file using the notebook's code and a
 - encode_categorical_columns
 - extract_x_y
 
-**Exercise 2** : Convert notebook into python files (2/4) 
+**Exercise 2** : Convert notebook into python files (2/4)
 
 These steps constitute the data processing phase. \
 Create a unique `processing` functions as entrypoint for all these steps.
@@ -34,7 +34,7 @@ Create a unique `processing` functions as entrypoint for all these steps.
 
 **Exercise 3**: Convert notebook into python files (3/4)
 
-Create five functions to complete the ML process : 
+Create five functions to complete the ML process :
 - Train model
 - Evaluate model
 - Predict
@@ -59,9 +59,9 @@ These two element should be loaded for batch prediction.
 
 > :bulb: You can import your main function inside the notebook to facilitate comparison
 
-## Workflows orchestration with prefect : 
+## Workflows orchestration with prefect :
 
-#### e.g. solutions : 
+#### e.g. solutions :
 - *exercise 1 : orchestration_01_prefect_orion.sh*
 - *exercise 2 : orchestration_02_first_flow.py*
 - *exercise 3 : orchestration_03_machine_learning_workflow.py*
@@ -74,19 +74,19 @@ These two element should be loaded for batch prediction.
 Before starting to implement tasks and flows with prefect, let's set up the UI in order to have a good visualization
 of our work.
 
-Steps : 
+Steps :
 
-- Set an API URL for your local server to make sure that your workflow will be tracked by this specific instance : 
+- Set an API URL for your local server to make sure that your workflow will be tracked by this specific instance :
 ```
 prefect config set PREFECT_API_URL=http://0.0.0.0:4200/api
 ```
 
-- Start a local prefect server : 
+- Start a local prefect server :
 ```
 prefect orion start --host 0.0.0.0
 ```
 
-Prefect database is stored at : 
+Prefect database is stored at :
 ```
 ~/.prefect/orion.db
 ```
@@ -118,7 +118,7 @@ dependencies through the name of each task output.
 Typing tasks in prefect is done as with any python code. \
 For flows, either use `validate_parameters=False`
 or define pydantic models for prefect to understand
-your NON DEFAULT typing (see extra section). 
+your NON DEFAULT typing (see extra section).
 
 > But if all tasks are typed, since flows are just set of tasks, it should be all good if we don't want to add a layer of complexity \
 > `Default types` : str, int ...
@@ -149,12 +149,12 @@ We can also access run information inside de `state` object that can be returned
 
 **Exercise 4** : Create machine learning flows (4/5)
 
-Create the complete ML process flow : 
+Create the complete ML process flow :
 - Process data
 - Train model
 - Evaluate model
 - Save model and vectorizer (dv) | use helpers
-- Predict 
+- Predict
 
 Create the prediction flow:
 - Load model and vectorizer
@@ -167,7 +167,7 @@ Create the prediction flow:
 
 **Exercise 5** : Create flows deployments with prefect (5/5)
 
-Example of code : 
+Example of code :
 
 ```
 from prefect.deployments import Deployment
@@ -179,7 +179,7 @@ from prefect.orion.schemas.schedules import (
 shcedule_examples = [
     IntervalSchedule(interval=600)
     CronSchedule(cron="0 0 * * 0")
-] 
+]
 
 dep = Deployment.build_from_flow(
     name="<random name>",
@@ -193,10 +193,10 @@ dep = Deployment.build_from_flow(
 
 
 Now that all the workflows are defined, we can now schedule automatics runs for these pipelines. \
-Let's assume that we have a process that tells us that our model need to be retrained weekly based on 
+Let's assume that we have a process that tells us that our model need to be retrained weekly based on
 some performance analysis. We also receive data to predict each hour.
 
-Use prefect deployment object in order to : 
+Use prefect deployment object in order to :
 - Schedule complete ml process to run weekly
 - Schedule prediction pipeline to run each hour
 
@@ -232,7 +232,7 @@ def my_flow():
 
 #### Custom typing with Pydantic
 
-It is possible to create custom validator for functions/flows inputs to helps prefect understand the 
+It is possible to create custom validator for functions/flows inputs to helps prefect understand the
 exact requirements needed for an input.
 
 ```
@@ -241,7 +241,7 @@ class CustomType(BaseModel):
   input_1 : type
   input_2 : type
   ...
-  
+
   @validator('input_1', 'input_2')
   def make_specific_test():
     ...
