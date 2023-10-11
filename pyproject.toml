@@ -1,0 +1,14 @@
+[tool.black]
+line-length = 120
+target-version = ['py39', 'py310']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  | lib/detection
+  | lib/trackers
+  | .ipynb_checkpoints
+  | __pycache__
+)/
+'''
+[tool.isort]
+profile = "black"

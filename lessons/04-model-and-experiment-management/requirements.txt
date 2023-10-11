@@ -1,4 +1,0 @@
-seaborn
-scikit-learn
-pandas
-mlflow
