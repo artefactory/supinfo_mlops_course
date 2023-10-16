@@ -1,49 +1,49 @@
-## Intro and Use case Reminder
+## Introduction and Use Case Reminder
 
-The project is *New York City Taxi trip duration prediction*. \
-The goal is to use the available data in order to train a simple machine learning model
-to predict the trip duration based on some input that can be available in production environment.
+The project focuses on predicting the duration of *New York City Taxi trips*. \
+The objective is to use the available data to train a simple machine learning model
+that can predict the trip duration based on inputs that could be available in a production environment.
 
-An ultimate goal for this use case can be to predict in real time trips durations (google-maps/waze like itinerary)
-but for simplicity, in this module, we assume that we need batch prediction. The data for which we need predictions
-will be stored in a file for ingestion in the trained model.
+The ultimate goal for this use case could be to predict trip durations in real time (similar to Google Maps or Waze itineraries),
+but for simplicity, in this module, we will assume that we only need batch predictions. The data for which we need predictions
+will be stored in a file for ingestion by an untrained model.
 
-The machine learning phase is mainly constituted by the following steps :
-- data processing
-- model training
-- model evaluation
-- prediction
+The machine learning phase primarily consists of the following steps:
+- Data processing
+- Model training
+- Model evaluation
+- Prediction
 
-The data to use for this module can be downloaded from the [TLC Trip Record Data page](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
-To complete this module, you will need 03 samples of data :
-- `sample 1 example` : [yellow trip 2021-01 data](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet) (to train model)
-- `sample 2 example` : [yellow trip 2021-02 data](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-02.parquet) (to evaluate model)
-- `sample 3 example` : [yellow trip 2021-03 data](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-03.parquet) (for prediction)
+The data for this module can be downloaded from the [TLC Trip Record Data page](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
+To complete this module, you will need three samples of data:
+- `Sample 1 example`: [Yellow trip 2021-01 data](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-01.parquet) (for model training)
+- `Sample 2 example`: [Yellow trip 2021-02 data](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-02.parquet) (for model evaluation)
+- `Sample 3 example`: [Yellow trip 2021-03 data](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2021-03.parquet) (for prediction)
 
 > **Disclaimer** :
-> The volumes of data used in this module are not at all significant to have efficient models and
-interpretable performances. Here we use data volumes that fit locally and allow pipelines building and fast execution but we don't focus on model performance and interpretability because it is not the main focus of this course.
+> The volumes of data used in this module are not significant enough to produce efficient models and
+interpretable performances. Here we use data volumes that fit locally and allow for pipeline building and fast execution, but we do not focus on model performance and interpretability as it is not the main focus of this course.
 
 > **Data location** :
-> Please create a "00-data" folder in the course root directory and put the downloaded files inside. \
-> If names are different, please rename your files to "yellow_tripdata_2021-01.parquet" (2021-02 / 2021-03)
+> Please create a "00-data" folder in the course root directory and place the downloaded files inside. \
+> If the names are different, please rename your files to "yellow_tripdata_2021-01.parquet", "yellow_tripdata_2021-02.parquet", and "yellow_tripdata_2021-03.parquet" respectively.
 
-## Notebook execution
+## Notebook Execution
 
 A notebook implementing the machine learning steps to predict Taxi trip duration can be found in the
-course' GitHub repository in the [introduction course](https://github.com/artefactory/supinfo_mlops_course/blob/master/lessons/01-intro).
+course's GitHub repository in the [introduction course](https://github.com/artefactory/supinfo_mlops_course/blob/master/lessons/01-intro).
 
-Since the main focus of the course is not Machine Learning itself, let's just run the notebook in your local jupyter container.
+Since the main focus of the course is not Machine Learning itself, we recommend running the notebook in your local Jupyter container.
 
-1. First, let's create our jupyter lab image and network by running
+1. First, let's create our Jupyter Lab image and network by running
 ```bash
 make prepare-mlops-crashcourse
 ```
 
-2. Then, let's create our local jupyter lab container by running
+2. Then, let's create our local Jupyter Lab container by running
 ```bash
 make launch-mlops-crashcourse
 ```
-You will need to pass the token 'MLOPS' to your jupyter lab UI
+You will need to pass the token 'MLOPS' to your Jupyter Lab UI
 
-3. Finally, go to `lessons/01-intro/practice-intro-supinfo.ipynb` and try running and understanding the modelization implementation
+3. Finally, navigate to `lessons/01-intro/practice-intro-supinfo.ipynb` and try running and understanding the model implementation
