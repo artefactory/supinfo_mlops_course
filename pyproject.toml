@@ -12,3 +12,4 @@ extend-exclude = '''
 '''
 [tool.isort]
 profile = "black"
+known_first_party = ["lib"]

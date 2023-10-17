@@ -15,4 +15,3 @@ docker run -itd --rm \
     -e JUPYTER_ENABLE_LAB=yes \
     --network mlops-crashcourse-supinfo \
     mlops_notebooks_supinfo
-
