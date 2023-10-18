@@ -2,7 +2,7 @@ seaborn==0.12.2
 scikit-learn==1.0.2
 pandas==1.5.3
 fastparquet==0.8.1
-prefect==2.7.9
+prefect==2.13.7
 
 # linting
 pre-commit
