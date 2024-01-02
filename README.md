@@ -24,7 +24,7 @@ Final project presentation: March 31st
 
 ## Syllabus
 
-### [Module 1: Introduction](lessons/01-intro)
+### [TD 1: Introduction](lessons/01-intro)
 
 * What is MLOps
 * Why do we need MLOps
@@ -35,7 +35,7 @@ Final project presentation: March 31st
 * Homework
 
 
-### [Module 2: Pipeline and Orchestration](lessons/02-pipeline-and-orchestration)
+### [TD 2: Pipeline and Orchestration](lessons/02-pipeline-and-orchestration)
 
 * Introduction to workflows orchestration
 * Introduction to Prefect
@@ -46,7 +46,7 @@ Final project presentation: March 31st
 * Homework
 
 
-### [Module 3: Data Management](lessons/03-data-management)
+### [TD 3: Data Management](lessons/03-data-management)
 
 * Testing Data Quality
 * Creating Data Pipelines
@@ -57,7 +57,7 @@ Final project presentation: March 31st
 * Homework
 
 
-### [Module 4: Model and Experiment Management](lessons/04-model-and-experiment-management)
+### [TD 4: Model and Experiment Management](lessons/04-model-and-experiment-management)
 
 * Experiment tracking intro
 * What is MLflow
@@ -68,7 +68,7 @@ Final project presentation: March 31st
 * Homework
 
 
-### [Module 5: Model Deployment](lessons/05-model-deployment)
+### [TD 5: Model Deployment](lessons/05-model-deployment)
 
 * Web service: model deployment with FastAPI
 * Docker: containerizing a web service
@@ -76,14 +76,11 @@ Final project presentation: March 31st
 * Locust: load testing a web service
 
 
-### [Module 6: Practice](lessons/06-practice)
+### [TD 6: Practice](lessons/06-practice)
 
 * End-to-end project with all the things above
 
 ## Instructors
 
-- El Hamri Amale
-- Guidi Ariel
-- Quinquet Guillaume
-- Si Larbi Karim
-- Deschamps Mael
+- Keener Jérémy
+- Rohart Capucine
