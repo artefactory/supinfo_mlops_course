@@ -5,7 +5,7 @@
 
 ## Intro and Use case Reminder
 
-Can be found in the [previous lesson](https://github.com/artefactory/supinfo_mlops_course/blob/master/lessons/01-intro/README.md).
+Can be found in the [previous lesson](https://github.com/artefactory/esilv_mlops_course/blob/master/lessons/01-intro/README.md).
 
 ## From notebook to Workflows :
 #### *e.g. solution : orchestration_00_machine_learning.py*
