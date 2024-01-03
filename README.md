@@ -82,5 +82,5 @@ Final project presentation: January 31st
 
 ## Instructors
 
-- Keener Jérémy
+- Keener Jeremy
 - Rohart Capucine
